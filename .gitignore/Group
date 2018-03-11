@@ -1,0 +1,43 @@
+package com.gmail.angrywikiwut;
+
+import java.io.*;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Scanner;
+
+@SuppressWarnings("unused")
+public class Group implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private Student [] group;
+	Group(){
+		group = new Student[0];
+			
+	}
+	
+	public void addStudent(String name, String lastname, String sex, int age, int recordBook) {
+		Student [] operationOne = new Student[group.length + 1];
+		System.arraycopy(group, 0, operationOne, 0, group.length);
+		operationOne[operationOne.length - 1] = new Student(name, lastname, sex, age, recordBook);
+		group = operationOne;
+	}
+	
+	public Student searchForStundent(String lastname) {
+		for(int i = 0; i < group.length; i++) {
+			if(group[i] != null && group[i].getLastname().equals(lastname)) {
+				return group[i];
+			}
+		}
+		return null;
+	}
+	
+	public void sortStudent() {
+		Arrays.sort(group, (a, b) -> NullCheker.checkNull(a,b) == NullCheker.NOT_NULL ? 
+				a.getLastname().compareTo(b.getLastname()) : NullCheker.checkNull(a, b));
+	}
+	
+	public void showInfo() {
+		for(Student k : group) {
+			System.out.println(k);
+		}
+	}
+}
