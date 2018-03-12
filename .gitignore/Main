@@ -9,12 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-
 @SuppressWarnings("unused")
 public class Main {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		
+
 		Group numberOne = new Group();
 		numberOne.addStudent("Alex", "Borovich", "Male", 18, 132321);
 		numberOne.addStudent("Miho", "Miho", "Male", 19, 123321);
@@ -22,75 +21,28 @@ public class Main {
 		numberOne.addStudent("Victor", "Torch", "Male", 17, 124421);
 		numberOne.addStudent("Vasya", "Pupkin", "Male", 18, 132332);
 
-		Group numberTwo = new Group();
-		numberTwo.addStudent("Max", "Pain", "Male", 18, 213321);
-		numberTwo.addStudent("Ivan", "Vanovich", "Male", 19, 214321);
-		numberTwo.addStudent("Koipse", "Deloir", "Male", 18, 215562);
-		numberTwo.addStudent("Boris", "Angry", "Male", 19, 214232);
-		numberTwo.addStudent("Sasha", "Slow", "Male", 18, 214355);
-
-		Group numberThree = new Group();
-		numberThree.addStudent("Umenya", "Netfantasii", "Male", 18, 314523);
-		numberThree.addStudent("Vasya", "Run", "Male", 19, 314323);
-		numberThree.addStudent("Some", "Username", "Male", 18, 314432);
-		numberThree.addStudent("Bogdan", "Antonovich", "Male", 19, 311313);
-		numberThree.addStudent("Vse", "Hvatit", "Male", 28, 312331);
-		
-		
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		File fileOne = new File("C://Users//Кек//Desktop//Desk//1.txt");
-		File fileTwo = new File("C://Users//Кек//Desktop//Desk//2.txt");
-		File fileThree = new File("C://Users//Кек//Desktop//Desk//3.txt");
-		System.out.println("Возможные запросы: 1)Состав группы №1; 2)Состав группы №2; 3)Состав группы №3;"
-				+ " 4)Поиск студента; 5)Запись состав студентов в файл; 6)Считать из файла ");
+		System.out.println("Возможные запросы: 1) Запись группы; 2) Считывание группы");
 		int number = sc.nextInt();
-		if(number == 1) {
-			System.out.println("Группа №1 состоит из таких студентов: ");
-			numberOne.sortStudent();
-			numberOne.showInfo();
-		}else if (number == 2) {
-			System.out.println("Группа №2 состоит из таких студентов: ");
-			numberTwo.sortStudent();
-			numberTwo.showInfo();
-		}else if (number == 3){
-			System.out.println("Группа №3 состоит из таких студентов: ");
-			numberThree.sortStudent();
-			numberThree.showInfo();
-		}else if (number == 4) {
-        	System.out.println("Поиск в группе №1: " + numberOne.searchForStundent("Miho"));
-			System.out.println("Поиск в группе №2: " + numberTwo.searchForStundent("Angry"));
-			System.out.println("Поиск в группе №3: " + numberThree.searchForStundent("Run"));
-		}else if (number == 5) {
+		if (number == 1) {
 			SeriazableToFile.saveToFile(numberOne, fileOne);
-			SeriazableToFile.saveToFile(numberTwo, fileTwo);
-			SeriazableToFile.saveToFile(numberThree, fileThree);
 			System.out.println("Сохранение завершенно!");
-		}else if (number == 6) {
+		} else if (number == 2) {
 			Group importOne = null;
-			Group importTwo = null;
-			Group importThree = null;
-			
 			try {
-				importOne = (Group)SeriazableToFile.loadFromFile(fileOne);
-				importTwo = (Group)SeriazableToFile.loadFromFile(fileTwo);
-				importThree = (Group)SeriazableToFile.loadFromFile(fileThree);
-			}catch(IOException e) {
+				importOne = (Group) SeriazableToFile.loadFromFile(fileOne);
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			System.out.println();
 			System.out.println("Результат считывания данных: ");
 			System.out.println();
-			System.out.println("Группа №1:");
+			System.out.println("Состояние группы:");
 			importOne.sortStudent();
 			importOne.showInfo();
-			System.out.println("Группа №2: ");
-			importTwo.sortStudent();
-			importTwo.showInfo();
-			System.out.println("Группа №3: ");
-			importThree.sortStudent();
-			importThree.showInfo();
-		}else if (number > 6) {
+		} else if (number > 2) {
 			System.out.println("Ошибка в выборе функций! Попробуйте еще раз!");
 		}
 	}
